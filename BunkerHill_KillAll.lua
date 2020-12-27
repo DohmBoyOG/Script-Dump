@@ -3,20 +3,16 @@ local thisPlayer = game:GetService("Players").LocalPlayer
 local otherPlayers = game:GetService("Players"):GetPlayers()
 
 local loopList = {}
-local gameCiv = 'Bright yellow'
-
-
+local gameCiv = "Bright yellow"
 
 key = "L1jbCuuchotZDpGkwDp3ygoPltzF2GQ"
 locBullet = game:GetService("Players").LocalPlayer.Character.Musket.Animation.BulletDamage
 weird = game:GetService("Players").LocalPlayer
 
-
-for _, i in pairs(otherPlayers) do 
+for _, i in pairs(otherPlayers) do
     if i.TeamColor ~= thisPlayer.TeamColor and i ~= thisPlayer and i.TeamColor ~= gameCiv then
         table.insert(loopList, i)
     end
-    
 end
 
 for _, v in pairs(loopList) do
