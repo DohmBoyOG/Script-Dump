@@ -1,6 +1,6 @@
 --game:GetService("ReplicatedStorage").SubCash
 
-local cash = game:GetService("Players").SimpsonsHomr.leaderstats
+local cash = game:GetService("Players").LocalPlayer.leaderstats
 
 for _, v in pairs(cash:GetChildren()) do
     if v:IsA('NumberValue') and v.name == 'CashMoney' then
