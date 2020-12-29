@@ -1,6 +1,10 @@
 worlds = game:GetService("Workspace").GameWorlds.NormalWorlds
 remote = game:GetService("ReplicatedStorage").Remotes.BreakBuilding
 
+if game:GetService("Workspace").StreamingEnabled == true then
+    game:GetService("Workspace").StreamingEnabled = false
+end
+
 spawn(function()
     for _, v in pairs(worlds:GetChildren()) do
         if v:IsA("Folder") then
