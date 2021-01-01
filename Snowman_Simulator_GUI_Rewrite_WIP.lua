@@ -2035,12 +2035,34 @@ local autos = window:AddTab('Auto Farms')
 -- About Frame --
 
 -- Autos Frame --
+
+-- Boss Frames --
 local bossFolder = autos:AddFolder('Boss Farm')
 local boss_drop = bossFolder:AddDropdown('Select Boss', function() end)
 local boss_toggle = bossFolder:AddSwitch('Start')
 local boss_options = bossFolder:AddFolder('Options')
+local boss_teleport = boss_options:AddButton('Teleport to boss')
 local boss_reward = boss_options:AddButton('Manual boss reward')
 local toggleables = boss_options:AddFolder('Toggleables')
 local haste = toggleables:AddSlider('Haste')
 local auto_reward = toggleables:AddSwitch('Auto boss reward')
+-- Boss Frames -
+
+-- Snowbase --
+local snowmanFolder = autos:AddFolder('Snowman')
+local snowman_toggle = snowmanFolder:AddSwitch('Start')
+local snowman_options = snowmanFolder:AddFolder('Options')
+local snowman_rebirth = snowman_options:AddSwitch('Auto Rebirth')
+-- Snowbase --
+
+-- Candies --
+local candieFolder = autos:AddFolder('Candies')
+local candie_toggle = candieFolder:AddSwitch('Start')
+local candie_options = candieFolder:AddFolder('Options')
+local candie_slider = candie_options:AddSlider('Candies to spawn')
+local candie_toggleables = candie_options:AddFolder('Toggleables')
+local candie_autosell = candie_toggleables:AddSwitch('AutoSell')
+-- Candies --
+
+
 
