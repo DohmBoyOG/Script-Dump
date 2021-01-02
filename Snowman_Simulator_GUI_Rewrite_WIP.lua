@@ -2022,10 +2022,39 @@ function library:AddWindow(title, options)
 	return window_data, Window
 end
 
+-- Local Setup --
+local gamePlayer = game:GetService("Players").LocalPlayer
+local ballSize = game:GetService("Players").LocalPlayer.info.snowmanBallSize
+local ballCount = game:GetService("Players").LocalPlayer.localData.snowballs
+local sackStorage = game:GetService("Players").LocalPlayer.localData.sackStorage
+local children = game:GetService("Workspace").snowmanBases:GetChildren()
+local bossStep = game:GetService("Workspace").steps
+local getMinions = game:GetService("Workspace"):GetDescendants()
+local pvpList = game:GetService("Players"):GetPlayers()
+local gameVector = Vector3.new(math.random(5000), y, math.random(5000))
+local bosses =  game:GetService("ReplicatedStorage").ThisGame.bosses
+-- Local Setup --
+
+-- Tables --
+local bossList = {}
+-- Tables -
+
+-- Other Local --
+local selectedBoss
+local auto_boss
+local haste = 0
+local dm = 20
+
 -- Window Setup --
-local window = library:AddWindow('Snowman Simulator GUI v2.0')
+local window = library:AddWindow('Snowman Simulator GUI v2.0', {
+		main_color = Color3.fromRGB(153, 76, 0),
+		min_size = Vector2.new(400, 600),
+		toggle_key = Enum.KeyCode.RightShift,
+		can_resize = true,
+	})
 local about = window:AddTab('About')
 local autos = window:AddTab('Auto Farms')
+local playerStuff = window:AddTab('Player')
 -- Window Setup --
 
 -- About Frame --
@@ -2038,15 +2067,17 @@ local autos = window:AddTab('Auto Farms')
 
 -- Boss Frames --
 local bossFolder = autos:AddFolder('Boss Farm')
-local boss_drop = bossFolder:AddDropdown('Select Boss', function() end)
-local boss_toggle = bossFolder:AddSwitch('Start')
+local boss_drop = bossFolder:AddDropdown('Select Boss', function(b) selectedBoss = b end)
+local boss_toggle = bossFolder:AddSwitch('Start', function(bool) auto_boss = bool end)
 local boss_options = bossFolder:AddFolder('Options')
-local boss_teleport = boss_options:AddButton('Teleport to boss')
+local boss_teleport = boss_options:AddButton('Teleport to boss',function() spawn(teleportBoss(selectedBoss)) end )
 local boss_reward = boss_options:AddButton('Manual boss reward')
 local toggleables = boss_options:AddFolder('Toggleables')
-local haste = toggleables:AddSlider('Haste')
+local timeWait = toggleables:AddSlider('Haste', function(value) haste = value end)
+local damgeMulti = toggleables:AddSlider('Damage Multiplyer', function(value) dm = value end)
 local auto_reward = toggleables:AddSwitch('Auto boss reward')
 -- Boss Frames -
+
 
 -- Snowbase --
 local snowmanFolder = autos:AddFolder('Snowman')
@@ -2064,5 +2095,78 @@ local candie_toggleables = candie_options:AddFolder('Toggleables')
 local candie_autosell = candie_toggleables:AddSwitch('AutoSell')
 -- Candies --
 
+-- Minions --
+local minionFolder = autos:AddFolder('Minions')
+local minion_toggle = minionFolder:AddSwitch('Start')
+local minion_options = minionFolder:AddFolder('Options')
+local minion_god = minion_options:AddButton('God Mode')
+-- Minions --
+
+-- Player -- 
+local playerFolder = playerStuff:AddFolder('PVP')
+playerFolder:AddLabel('You must have PVP Enabled, to use these Options.')
+local pvp_dropdown = playerFolder:AddDropdown('PVP Enabled Players')
+local pvp_teleport = playerFolder:AddButton('Kill By Teleport')
+local pvp_killall = playerFolder:AddButton('Kill All')
+-- Player -- 
+
+-- Functions --
+function getbossList()
+    for _, v in pairs(bosses:GetChildren()) do
+        boss_drop:Add(v)
+    end
+end
+
+function teleportBoss(boss)
+    for _, bossLedge in pairs(bossStep:GetChildren()) do
+        if bossLedge.name == 'bossLedge' then
+            local whatBoss = bossLedge.bossName.value
+            local isBoss = boss
+            if whatBoss == isBoss then 
+                gamePlayer.Character.HumanoidRootPart.CFrame = bossLedge.portal.teleportSpot.CFrame
+            end
+        end
+    end
+end
+
+function searchBoss(b)
+    for _, findLedge in next, bossStep:GetChildren() do
+        if findLedge.Name == 'bossLedge' then
+            for _, findBoss in next, findLedge:GetChildren() do
+                if findBoss:IsA('Folder') and findBoss.Name == 'Boss' then
+                    if findBoss.bossName.Value == b then
+                        return findBoss
+                    end
+                end
+            end
+        end
+    end
+end
+
+function bossAuto()
+    print('Entered Boss Function')
+    local bossPosition = searchBoss(selectedBoss)
+    if bossPosition:FindFirstChild('Boss') and bossPosition.Boss:FindFirstChild('HumanoidRootPart') then
+        local position = bossPosition.Boss.HumanoidRootPart.CFrame.p;
+        local Event = game:GetService("ReplicatedStorage").ThisGame.Calls.snowballProjectile
+        wait(haste)
+        for i=1, dm do
+            Event:FireServer('explodeLauncher', position)
+            game:GetService("RunService").Heartbeat:wait()
+        end
+    end
+end
+
+
+getbossList()
+
+while wait() do
+    if auto_boss == true then
+        spawn(bossAuto)
+    end
+end
+
+    
+    
 
 
