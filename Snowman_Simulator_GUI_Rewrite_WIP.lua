@@ -2073,6 +2073,20 @@ local playerStuff = window:AddTab('Player')
 -- Window Setup --
 
 -- About Frame --
+about:AddLabel(' [ Snowman Simulator GUI ]')
+about:AddLabel(' Made By DohmBoyOG')
+about:AddLabel(' Current Version: 2.0')
+about:AddLabel('')
+about:AddLabel(' Discord: DohmBoyOG#0313')
+about:AddLabel(' GitHub: https://short.dohmscripts.com/ucg')
+about:AddLabel(' Youtube: https://short.dohmscripts.com/DohmBoyOGYT')
+about:AddLabel('')
+about:AddLabel(' Feel free to contact me on discord, with any questions!')
+about:AddLabel(' All my scripts are open source and linkiverse free :D')
+about:AddLabel('')
+about:AddLabel(' [Changelog]')
+about:AddLabel('')
+about:AddLabel(' 1/4/2021 - Brand New UI, Optimized some of the code')
 
 -- nothing yet
 
@@ -2126,9 +2140,9 @@ local minion_god = minion_options:AddButton('God Mode', function() mGod() end)
 -- Player -- 
 local playerFolder = playerStuff:AddFolder('PVP')
 playerFolder:AddLabel('You must have PVP Enabled, to use these Options.')
-local pvp_dropdown = playerFolder:AddDropdown('PVP Enabled Players', function(value) pvpPlayer = value end)
+local pvp_dropdown = playerFolder:AddDropdown('PVP Enabled Players', function(value) pvpPlayer = value  getPVP() end)
 local pvp_teleport = playerFolder:AddButton('Kill By Teleport', function() teleportKill() end)
-local pvp_killall = playerFolder:AddButton('Kill All')
+local pvp_killall = playerFolder:AddButton('Kill All', function() loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Snow-Simulator-GUI/main/SilentKillALLV1.lua"))() end)
 -- Player -- 
 
 -- Functions --
@@ -2320,6 +2334,11 @@ function getPVP()
     if #pvpEnabled == 0 then
         pvp_dropdown:Add('No PVP Enabled Players')
     end
+    
+    for _, v in pairs(pvp_dropdown) do
+        print(_)
+    end
+    
 end
 
 function teleportKill()
@@ -2344,7 +2363,7 @@ end
 
 
 
-
+about:Show()
 getbossList()
 getPVP()
 
@@ -2373,6 +2392,7 @@ while wait() do
     if killM == true then
         killMinions()
     end
+    
 end
 
 
