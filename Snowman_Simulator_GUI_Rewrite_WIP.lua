@@ -2024,6 +2024,7 @@ end
 
 -- Local Setup --
 local gamePlayer = game:GetService("Players").LocalPlayer
+local otherPlayers = game:GetService("Players")
 local ballSize = game:GetService("Players").LocalPlayer.info.snowmanBallSize
 local ballCount = game:GetService("Players").LocalPlayer.localData.snowballs
 local sackStorage = game:GetService("Players").LocalPlayer.localData.sackStorage
@@ -2042,13 +2043,27 @@ local bossList = {}
 -- Other Local --
 local selectedBoss
 local auto_boss
+local doReward
+local autoSnow
+local rebirthAuto
+local autoCandy 
+local waitFor
+local autoSell
+local pvpPlayer
+local killM
 local haste = 0
-local dm = 20
+local dm = 0
+local waitcount
+local noOptions = true
+
+local eventKill = game:GetService("ReplicatedStorage").ThisGame.Calls.snowballProjectile
+local killPlayer = "pvpHit"
+local gameVector = Vector3.new(math.random(5000), y, math.random(5000))
 
 -- Window Setup --
 local window = library:AddWindow('Snowman Simulator GUI v2.0', {
 		main_color = Color3.fromRGB(153, 76, 0),
-		min_size = Vector2.new(400, 600),
+		min_size = Vector2.new(400, 710),
 		toggle_key = Enum.KeyCode.RightShift,
 		can_resize = true,
 	})
@@ -2073,40 +2088,46 @@ local boss_options = bossFolder:AddFolder('Options')
 local boss_teleport = boss_options:AddButton('Teleport to boss',function() spawn(teleportBoss(selectedBoss)) end )
 local boss_reward = boss_options:AddButton('Manual boss reward')
 local toggleables = boss_options:AddFolder('Toggleables')
-local timeWait = toggleables:AddSlider('Haste', function(value) haste = value end)
-local damgeMulti = toggleables:AddSlider('Damage Multiplyer', function(value) dm = value end)
-local auto_reward = toggleables:AddSwitch('Auto boss reward')
+local haste_text = toggleables:AddLabel('Haste - [ Time Between Attacks ]')
+local Haste = toggleables:AddTextBox('Must be a Number can be a decimal EX: 0.3', function(text) haste = tonumber(text) end, {["clear"] = false,})
+local damageText = toggleables:AddLabel('Demage Multiplyer - [ How Attacks Thrown ]')
+local damageMulti = toggleables:AddTextBox('Must be a Number', function(text) dm = tonumber(text) end, {["clear"] = false,})
+--local timeWait = toggleables:AddSlider('Haste', function(value) haste = value end)
+--local damgeMulti = toggleables:AddSlider('Damage Multiplyer', function(value) dm = value end)
+local auto_reward = toggleables:AddSwitch('Auto boss reward', function(bool) doReward = bool end)
 -- Boss Frames -
 
 
 -- Snowbase --
 local snowmanFolder = autos:AddFolder('Snowman')
-local snowman_toggle = snowmanFolder:AddSwitch('Start')
+local snowman_toggle = snowmanFolder:AddSwitch('Start', function(bool) autoSnow = bool end)
 local snowman_options = snowmanFolder:AddFolder('Options')
-local snowman_rebirth = snowman_options:AddSwitch('Auto Rebirth')
+local snowman_rebirth = snowman_options:AddSwitch('Auto Rebirth', function(bool) rebirthAuto = bool end)
 -- Snowbase --
 
 -- Candies --
 local candieFolder = autos:AddFolder('Candies')
-local candie_toggle = candieFolder:AddSwitch('Start')
+local candie_toggle = candieFolder:AddSwitch('Start', function(bool) autoCandy = bool end)
 local candie_options = candieFolder:AddFolder('Options')
-local candie_slider = candie_options:AddSlider('Candies to spawn')
+local candie_label = candie_options:AddLabel('Amount of Candies to wait to spawn')
+local candie_textbox = candie_options:AddTextBox('20', function(text) waitcount = tonumber(text) print(waitcount) end ,{["clear"] = false,})
+local candie_bool = candie_options:AddSwitch('Enable', function(bool) waitFor = bool if waitFor == true then noOptions = false else noOptions = true end end)
 local candie_toggleables = candie_options:AddFolder('Toggleables')
-local candie_autosell = candie_toggleables:AddSwitch('AutoSell')
+local candie_autosell = candie_toggleables:AddSwitch('AutoSell', function(bool) autoSell = bool  end)
 -- Candies --
 
 -- Minions --
 local minionFolder = autos:AddFolder('Minions')
-local minion_toggle = minionFolder:AddSwitch('Start')
+local minion_toggle = minionFolder:AddSwitch('Start', function(bool) killM = bool end)
 local minion_options = minionFolder:AddFolder('Options')
-local minion_god = minion_options:AddButton('God Mode')
+local minion_god = minion_options:AddButton('God Mode', function() mGod() end)
 -- Minions --
 
 -- Player -- 
 local playerFolder = playerStuff:AddFolder('PVP')
 playerFolder:AddLabel('You must have PVP Enabled, to use these Options.')
-local pvp_dropdown = playerFolder:AddDropdown('PVP Enabled Players')
-local pvp_teleport = playerFolder:AddButton('Kill By Teleport')
+local pvp_dropdown = playerFolder:AddDropdown('PVP Enabled Players', function(value) pvpPlayer = value end)
+local pvp_teleport = playerFolder:AddButton('Kill By Teleport', function() teleportKill() end)
 local pvp_killall = playerFolder:AddButton('Kill All')
 -- Player -- 
 
@@ -2144,12 +2165,12 @@ function searchBoss(b)
 end
 
 function bossAuto()
-    print('Entered Boss Function')
     local bossPosition = searchBoss(selectedBoss)
     if bossPosition:FindFirstChild('Boss') and bossPosition.Boss:FindFirstChild('HumanoidRootPart') then
         local position = bossPosition.Boss.HumanoidRootPart.CFrame.p;
         local Event = game:GetService("ReplicatedStorage").ThisGame.Calls.snowballProjectile
         wait(haste)
+        print('Entered Boss Function')
         for i=1, dm do
             Event:FireServer('explodeLauncher', position)
             game:GetService("RunService").Heartbeat:wait()
@@ -2157,14 +2178,215 @@ function bossAuto()
     end
 end
 
+function autoReward()
+    local bossPosition = searchBoss(selectedBoss)
+    if bossPosition:FindFirstChild('Boss') and bossPosition.Boss:FindFirstChild('HumanoidRootPart') then
+        local Event = game:GetService("ReplicatedStorage").ThisGame.Calls.bossReward
+        for i= 1, 80 do
+            Event:FireServer('hit', selectedBoss, game:GetService("Workspace").steps.bossLedge.Boss.Boss.Humanoid)
+            game:GetService("RunService").Heartbeat:wait()
+            end
+    end
+end
+
+function maxSize()
+    return 8 + 12 * math.clamp(game:GetService("Players").LocalPlayer.localData.collecting.Value / 200, 0, 1)
+end
+
+function autoSnowman()
+   game:GetService("ReplicatedStorage").ThisGame.Calls.snowballControllerFunc:InvokeServer("startRoll")
+    repeat
+        for i = 1, 100 do
+        game:GetService("ReplicatedStorage").ThisGame.Calls.collectSnow:FireServer()
+        game:GetService("RunService").Heartbeat:wait()
+        end
+    until ballSize.Value >= maxSize()
+        
+    warn('[Snowball Size]: '..ballSize.Value..'/'..maxSize())
+    game:GetService("ReplicatedStorage").ThisGame.Calls.snowballControllerFunc:InvokeServer("stopRoll")
+    if ballCount.Value == sackStorage.Value then
+        warn("Stop Collecting")
+        game:GetService("ReplicatedStorage").ThisGame.Calls.snowballController:FireServer("addToSnowman")
+        warn("Adding Collection to Snowman")
+        end
+        while rebirthAuto == true and getBool() == true do
+            wait()
+            warn("Rebirthed!")
+            provideRebirth()
+            wait()
+        end
+end
+
+function getBool()
+    for _, gamePlots in pairs(children) do
+        if gamePlots.player.Value == gamePlayer then
+            return gamePlots.rebirthActive.Value
+        end
+    end
+end
+
+function provideRebirth() 
+    for _, value in pairs(children) do
+        if value.player.value == gamePlayer then
+            if value.player.value == gamePlayer then
+                LandPlot = value
+            end
+        end
+    end
+
+    local Event = game:GetService("ReplicatedStorage").ThisGame.Calls.snowmanEvent
+
+    Event:FireServer('acceptRebirth', LandPlot, true)
+end 
+
+function startCollection()
+    for _ , candyCanes in next, game:GetService("Workspace").gameCandyCanes:GetChildren() do
+        local cane = candyCanes:FindFirstChild("cane")
+        if cane then
+            gamePlayer.Character.HumanoidRootPart.CFrame  = candyCanes.cane.CFrame * CFrame.new(0,4,0)
+            wait(0.40)
+        end
+    end
+end
+
+
+
+function sellCandy()
+    if autoSell == true then
+        for count = 1, 3 do
+            local Event = game:GetService("ReplicatedStorage").ThisGame.Calls.candycaneSell
+            Event:FireServer("sellCandycanes", count)
+        end
+    end
+end
+
+function countCandy()
+    local candyCanes = game:GetService("Workspace").gameCandyCanes:GetChildren()
+    local count = #candyCanes
+    return count
+end
+
+function killMinions()
+    for _, value in pairs(getMinions) do
+        if value:IsA('Folder') and value.name == 'minionHolder' then
+            for _, m in pairs(value:GetChildren()) do
+                for i = 1, 20 do
+                    game:GetService("ReplicatedStorage").ThisGame.Calls.minionHelper:FireServer("minionHit", m)
+                    game:GetService("RunService").Heartbeat:wait()
+                end
+            end
+        end
+    end
+end
+
+function mGod()
+    for _, v in pairs(game:GetService("Players").LocalPlayer.PlayerScripts.ThisGame:GetChildren()) do 
+        if v:IsA('ModuleScript') and v.Name == 'snowballProjectileClient' then 
+            for _, s in pairs(getgc()) do 
+                if type(s) == "function" and getfenv(s).script == game:GetService("Players").LocalPlayer.PlayerScripts.ThisGame[v.Name] then 
+                    if debug.getinfo(s).name == 'minionSnowball' then 
+                        hookfunction(s, function(...)
+                            print('Nice, try minions cant hurt us!')
+                            return 'No Thank you.';
+                        end)
+                    end
+                end
+            end
+        end
+    end
+end
+
+function getPVP()
+    
+    local pvpEnabled = {}
+    
+    for i, player in pairs(pvpList) do 
+        if player == game.Players.LocalPlayer then
+            table.remove(pvpList, i)
+        end
+    end
+    
+    for _, v in pairs(pvpList) do
+        if v.localData.playerSettings.pvp.value == true then
+            table.insert(pvpEnabled,v)
+        end
+    end
+    
+    for _, pvp in pairs(pvpEnabled) do
+        print(pvp)
+        pvp_dropdown:Add(pvp)
+    end
+    
+    if #pvpEnabled == 0 then
+        pvp_dropdown:Add('No PVP Enabled Players')
+    end
+end
+
+function teleportKill()
+    for _, v in pairs(otherPlayers:GetPlayers()) do
+        if v.Name == pvpPlayer then
+            gamePlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,8)
+            repeat
+                for i = 1, 2 do
+                    eventKill:FireServer(killPlayer, v, gameVector)
+                    wait(0.30)
+                    end
+            until v.Character.Humanoid.Health == 0
+        end
+    end
+end
+    
+
+
+
+
+
+
+
+
 
 getbossList()
+getPVP()
 
 while wait() do
     if auto_boss == true then
         spawn(bossAuto)
     end
+    
+    if doReward == true then
+        spawn(autoReward)
+    end
+    
+    if autoSnow == true then
+        autoSnowman()
+    end
+    if autoCandy == true and noOptions == true then
+        startCollection()
+        sellCandy()
+    elseif waitFor == true and noOptions == false then
+        print(countCandy())
+        if countCandy() >= waitcount then
+            startCollection()
+            sellCandy()
+        end
+    end
+    if killM == true then
+        killMinions()
+    end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
     
