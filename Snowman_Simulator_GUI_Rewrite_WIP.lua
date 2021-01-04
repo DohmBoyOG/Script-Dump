@@ -2084,9 +2084,16 @@ about:AddLabel('')
 about:AddLabel(' Feel free to contact me on discord, with any questions!')
 about:AddLabel(' All my scripts are open source and linkiverse free :D')
 about:AddLabel('')
+about:AddLabel(' Must Read: When you enter a number in any of the text')
+about:AddLabel(' boxs, press enter afterwords. right shift to toggle GUI')
+about:AddLabel('')
 about:AddLabel(' [Changelog]')
 about:AddLabel('')
 about:AddLabel(' 1/4/2021 - Brand New UI, Optimized some of the code')
+about:AddLabel('')
+about:AddLabel(' Features Planned for next update')
+about:AddLabel('* Auto Buy Sleighs, Launchers, Skins ETC')
+
 
 -- nothing yet
 
@@ -2142,7 +2149,7 @@ local playerFolder = playerStuff:AddFolder('PVP')
 playerFolder:AddLabel('You must have PVP Enabled, to use these Options.')
 local pvp_dropdown = playerFolder:AddDropdown('PVP Enabled Players', function(value) pvpPlayer = value  getPVP() end)
 local pvp_teleport = playerFolder:AddButton('Kill By Teleport', function() teleportKill() end)
-local pvp_killall = playerFolder:AddButton('Kill All', function() loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Snow-Simulator-GUI/main/SilentKillALLV1.lua"))() end)
+local pvp_killall = playerFolder:AddButton('Kill All', function() loadstring(game:HttpGet("https://scripts.dohmscripts.com/SnowManV2"))() end)
 -- Player -- 
 
 -- Functions --
