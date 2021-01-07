@@ -2442,13 +2442,16 @@ end
 function candyFloor()
 for _, value in pairs(getMinions) do
     if value:IsA('Folder') and value.name == 'minionHolder' then
-        for _, v in pairs(value:GetDescendants()) do
-            if v:IsA('Part') and v.Name == 'hitBox' then
-                v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+        for _, b in pairs(value:GetDescendants()) do
+            if b:IsA('Part') and b.Name == 'hitBox' then
+                for _, v in pairs(otherPlayers:GetPlayers()) do
+                    b.CFrame = v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
                 end
+            end
         end
     end
 end
+
 wait()
  for _, value in pairs(getMinions) do
         if value:IsA('Folder') and value.name == 'minionHolder' then
