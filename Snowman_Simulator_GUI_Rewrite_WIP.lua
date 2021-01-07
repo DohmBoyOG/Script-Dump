@@ -2160,8 +2160,8 @@ local pvp_killall = playerFolder:AddButton('Kill All', function() loadstring(gam
 
 local magicFolder = playerStuff:AddFolder('Magic Candy')
 local magic_candies = magicFolder:AddDropdown('Players', function(value) mc = value end)
-local candy_brick = magicFolder:AddButton('Candy Brick Road', function() netBypass() candyBrickRoad() end)
-local candy_floor = magicFolder:AddButton('Candy Floor', function() netBypass() candyFloor() end)
+local candy_brick = magicFolder:AddButton('Candy Brick Road', function() candyBrickRoad() end)
+local candy_floor = magicFolder:AddButton('Candy Floor', function() candyFloor() end)
 local sleigh_folder = playerStuff:AddFolder('Sleigh')
 local sleigh_toggle = sleigh_folder:AddSwitch('Unlimited Fuel', function(bool) unlimFuel = bool end)
 
@@ -2445,12 +2445,15 @@ for _, value in pairs(getMinions) do
         for _, b in pairs(value:GetDescendants()) do
             if b:IsA('Part') and b.Name == 'hitBox' then
                 for _, v in pairs(otherPlayers:GetPlayers()) do
-                    b.CFrame = v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+                    if v.Name == mc then
+                        b.CFrame = v.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+                    end
                 end
             end
         end
     end
 end
+
 
 wait()
  for _, value in pairs(getMinions) do
