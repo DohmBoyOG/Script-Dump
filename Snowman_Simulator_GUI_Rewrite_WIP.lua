@@ -2160,8 +2160,8 @@ local pvp_killall = playerFolder:AddButton('Kill All', function() loadstring(gam
 
 local magicFolder = playerStuff:AddFolder('Magic Candy')
 local magic_candies = magicFolder:AddDropdown('Players', function(value) mc = value end)
-local candy_brick = magicFolder:AddButton('Candy Brick Road', function() candyBrickRoad() end)
-local candy_floor = magicFolder:AddButton('Candy Floor', function() candyFloor() end)
+local candy_brick = magicFolder:AddButton('Candy Brick Road', function() netBypass() candyBrickRoad() end)
+local candy_floor = magicFolder:AddButton('Candy Floor', function() netBypass() candyFloor() end)
 local sleigh_folder = playerStuff:AddFolder('Sleigh')
 local sleigh_toggle = sleigh_folder:AddSwitch('Unlimited Fuel', function(bool) unlimFuel = bool end)
 
