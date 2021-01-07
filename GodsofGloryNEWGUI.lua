@@ -1,13 +1,17 @@
-thisPlayer = game:GetService("Players").LocalPlayer
-otherPlayer = game:GetService("Players")
+local thisPlayer = game:GetService("Players").LocalPlayer
+local otherPlayer = game:GetService("Players")
+local worlds = game:GetService("Workspace").GameWorlds
+
+
 
 local flingStart = game:GetService("ReplicatedStorage").Remotes.KickOtherPlayer
+local remote = game:GetService("ReplicatedStorage").Remotes.BreakBuilding
 
 local rageMode
 local targeted
 local customXYZ
 local flingMulti
-
+local clipping
 
  
 gui = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/DohmBoyOG/UI/main/FluxUI.lua"))()
@@ -17,22 +21,57 @@ local main = gui:Window('Gods of Glory','by DohmBoyOG')
 local player_options = main:Tab('Player','')
 local world_options = main:Tab('World','')
 local teleport_options = main:Tab('Teleporting','')
-local other_options = main:Tab('Other','')
+local settings_options = main:Tab('Settings','')
 
 player_options:Label('Fling Menu')
 player_options:Line()
-player_options:Button('Fling all','Throws all the players are around the map', function() spawn(fling) end)
-player_options:Button('Alien Abduction [Fling]','This kinda looks like an alien abduction! Flings all player high in the air, make sure you only hit the button once and wait!', function() spawn(flingToMoon) end)
+player_options:Button('[Button] Fling all','Throws all the players are around the map', function() spawn(fling) end)
+player_options:Button('[Button] Alien Abduction [Fling]','This kinda looks like an alien abduction! Flings all player high in the air, make sure you only hit the button once and wait!', function() spawn(flingToMoon) end)
 player_options:Toggle('Rage Mode','Flings players continuously',false, function(bool) rageMode = bool end)
 player_options:Line()
 local fling_drop = player_options:Dropdown('Player List', {}, function(value) targeted = value end)
-player_options:Button('Fling player','Flings Targeted Player', function() spawn(targetPlayer) end)
+player_options:Button('[Button] Fling player','Flings Targeted Player', function() spawn(targetPlayer) end)
 player_options:Line()
-player_options:Button('Custom Fling all','Throws all the players are around the map with Custom Variables!', function() spawn(flingCustom) end)
-player_options:Button('Custom Fling player','Select player from dropdown, then use the text input to choose your custom variables and off they go!', function() spawn(flingCustom) end)
+player_options:Button('[Button] Custom Fling all','Throws all the players are around the map with Custom Variables!', function() spawn(flingCustom) end)
+player_options:Button('[Button] Custom Fling player','Select player from dropdown, then use the text input to choose your custom variables and off they go!', function() spawn(flingCustom) end)
 player_options:Toggle('Custom Rage Mode','Flings players continuously, but with custom variables!',false, function(bool) customRageMode = bool end)
 player_options:Textbox('Custom Vector3', 'If you would like to fling players a certain direction using XYZ cords, EX 0, 900000000, 0 and hit enter', false, function(value) customXYZ = tonumber(value) end)
 player_options:Textbox('Fling Multiplyer','How many times to fling a player each loop, the higher the number the more extreme the fling, no decimals! hit enter', false, function(value) flingMulti = tonumber(value) end)
+
+
+
+
+
+
+settings_options:Label('Settings Menu')
+settings_options:Line()
+settings_options:Button('[Button] Network Bypass', 'Only Needed to be clicked once per server join, required for certain features to work.', function() netBypass() end)
+settings_options:Toggle('NO CLIP', 'You should know what this does by now.', false, function(bool) clipping = bool end)
+
+world_options:Label('World Destruction Menu')
+settings_options:Line()
+world_options:Button('[Button] Destroy all','Self Destructs all Destructiables in all Worlds on the server, there are 9', function() spawn(destructAllWorld) end)
+
+
+function netBypass()
+    print('Network Bypass Loaded.')
+    local NetworkAccess = coroutine.create(function()
+    settings().Physics.AllowSleep = false
+    while game:GetService("RunService").RenderStepped:Wait() do
+        for _, Players in next, game:GetService("Players"):GetPlayers() do
+            if Players ~= game:GetService("Players").LocalPlayer then
+                Players.MaximumSimulationRadius = 0 
+                sethiddenproperty(Players, "SimulationRadius", 0) 
+            end 
+        end
+        game:GetService("Players").LocalPlayer.MaximumSimulationRadius = math.pow(math.huge,math.huge)
+        setsimulationradius(math.huge) 
+    end 
+end) 
+coroutine.resume(NetworkAccess)
+end
+
+
 
 function fling()
     for _, v in pairs(otherPlayer:GetPlayers()) do
@@ -57,7 +96,24 @@ function customRage()
     end
 end
 
-
+function destructAllWorld()
+    for _, v in pairs(worlds:GetChildren()) do
+        if v:IsA("Folder") then
+            for _, destructs in pairs(v:GetDescendants()) do
+                if destructs:IsA("Folder") and destructs.Name == "Destructibles" then
+                    for _, begin in pairs(destructs:GetChildren()) do
+                        remote:FireServer(
+                            {
+                                ["TagFullName"] = tostring(begin:GetFullName())
+                                
+                            }
+                            )
+                    end
+                end
+            end
+        end
+    end
+end
 
 function targetPlayer()
     for _, v in pairs(game.Players:GetPlayers()) do
@@ -153,9 +209,13 @@ while wait() do
     if customRageMode == true then
         spawn(customRage)
     end
+end
+
     
         
-end
+    
+        
+
 
 
 

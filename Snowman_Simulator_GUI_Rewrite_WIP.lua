@@ -2034,6 +2034,8 @@ local getMinions = game:GetService("Workspace"):GetDescendants()
 local pvpList = game:GetService("Players"):GetPlayers()
 local gameVector = Vector3.new(math.random(5000), y, math.random(5000))
 local bosses =  game:GetService("ReplicatedStorage").ThisGame.bosses
+local fun = game:GetService("Workspace").sleighHolder.DohmBoyOG
+local sleighremote = game:GetService("ReplicatedStorage").ThisGame.Calls.sleighEvent
 -- Local Setup --
 
 -- Tables --
@@ -2050,7 +2052,9 @@ local autoCandy
 local waitFor
 local autoSell
 local pvpPlayer
+local unlimFuel
 local killM
+local mc
 local haste = 0
 local dm = 0
 local waitcount
@@ -2061,7 +2065,7 @@ local killPlayer = "pvpHit"
 local gameVector = Vector3.new(math.random(5000), y, math.random(5000))
 
 -- Window Setup --
-local window = library:AddWindow('Snowman Simulator GUI v2.0', {
+local window = library:AddWindow('Snowman Simulator GUI v2.1', {
 		main_color = Color3.fromRGB(153, 76, 0),
 		min_size = Vector2.new(400, 710),
 		toggle_key = Enum.KeyCode.RightShift,
@@ -2075,7 +2079,7 @@ local playerStuff = window:AddTab('Player')
 -- About Frame --
 about:AddLabel(' [ Snowman Simulator GUI ]')
 about:AddLabel(' Made By DohmBoyOG')
-about:AddLabel(' Current Version: 2.0')
+about:AddLabel(' Current Version: 2.1')
 about:AddLabel('')
 about:AddLabel(' Discord: DohmBoyOG#0313')
 about:AddLabel(' GitHub: https://short.dohmscripts.com/ucg')
@@ -2091,8 +2095,8 @@ about:AddLabel(' in the boss farm under Toggleables or it wt do anything')
 about:AddLabel(' i recommand 1 for Haste and 20 for Damage Multiplyer')
 about:AddLabel('')
 about:AddLabel(' [Changelog]')
-about:AddLabel('')
-about:AddLabel(' 1/4/2021 - Brand New UI, Optimized some of the code')
+about:AddLabel('1/7/2021 New Update! Check Logs!')
+about:AddLabel(' Goto https://short.dohmscripts.com/Changelog')
 about:AddLabel('')
 about:AddLabel(' Features Planned for next update')
 about:AddLabel('* Auto Buy Sleighs, Launchers, Skins ETC')
@@ -2153,9 +2157,18 @@ playerFolder:AddLabel('You must have PVP Enabled, to use these Options.')
 local pvp_dropdown = playerFolder:AddDropdown('PVP Enabled Players', function(value) pvpPlayer = value  getPVP() end)
 local pvp_teleport = playerFolder:AddButton('Kill By Teleport', function() teleportKill() end)
 local pvp_killall = playerFolder:AddButton('Kill All', function() loadstring(game:HttpGet("https://scripts.dohmscripts.com/SnowManV2"))() end)
+
+local magicFolder = playerStuff:AddFolder('Magic Candy')
+local magic_candies = magicFolder:AddDropdown('Players', function(value) mc = value end)
+local candy_brick = magicFolder:AddButton('Candy Brick Road', function() candyBrickRoad() end)
+local candy_floor = magicFolder:AddButton('Candy Floor', function() candyFloor() end)
+local sleigh_folder = playerStuff:AddFolder('Sleigh')
+local sleigh_toggle = sleigh_folder:AddSwitch('Unlimited Fuel', function(bool) unlimFuel = bool end)
+
 -- Player -- 
 
 -- Functions --
+
 function getbossList()
     for _, v in pairs(bosses:GetChildren()) do
         boss_drop:Add(v)
@@ -2365,17 +2378,115 @@ function teleportKill()
     end
 end
     
+function playerLeft(player)
+    magic_candies:Remove(player)
+    print('Removing '..player.Name..' from list')
+end
 
 
 
+function playerJoined(player)
+    magic_candies:Add(player)
+    print('Adding '..player.Name..' to list')
+end
+
+p = 0 
+function candyBrickRoad()
+for _, value in pairs(getMinions) do
+    if value:IsA('Folder') and value.name == 'minionHolder' then
+        for _, b in pairs(value:GetDescendants()) do
+            if b:IsA('Part') and b.Name == 'hitBox' then
+                for _, v in pairs(otherPlayers:GetPlayers()) do
+                     if v.Name == mc then
+                         p = p + 2
+                         b.CFrame = v.Character.HumanoidRootPart.CFrame  * CFrame.new(p,0,-5)
+                     end
+                end
+            end
+        end
+    end
+end
+ 
+ 
+wait(5)
+ for _, value in pairs(getMinions) do
+        if value:IsA('Folder') and value.name == 'minionHolder' then
+            for _, m in pairs(value:GetChildren()) do
+                for i = 1, 20 do
+                    game:GetService("ReplicatedStorage").ThisGame.Calls.minionHelper:FireServer("minionHit", m)
+                    game:GetService("RunService").Heartbeat:wait()
+                end
+            end
+        end
+ end end
+ 
+ function netBypass()
+    print('Network Bypass Loaded.')
+    local NetworkAccess = coroutine.create(function()
+    settings().Physics.AllowSleep = false
+    while game:GetService("RunService").RenderStepped:Wait() do
+        for _, Players in next, game:GetService("Players"):GetPlayers() do
+            if Players ~= game:GetService("Players").LocalPlayer then
+                Players.MaximumSimulationRadius = 0 
+                sethiddenproperty(Players, "SimulationRadius", 0) 
+            end 
+        end
+        game:GetService("Players").LocalPlayer.MaximumSimulationRadius = math.pow(math.huge,math.huge)
+        setsimulationradius(math.huge) 
+    end 
+end) 
+coroutine.resume(NetworkAccess)
+end
+
+function candyFloor()
+for _, value in pairs(getMinions) do
+    if value:IsA('Folder') and value.name == 'minionHolder' then
+        for _, v in pairs(value:GetDescendants()) do
+            if v:IsA('Part') and v.Name == 'hitBox' then
+                v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+                end
+        end
+    end
+end
+wait()
+ for _, value in pairs(getMinions) do
+        if value:IsA('Folder') and value.name == 'minionHolder' then
+            for _, m in pairs(value:GetChildren()) do
+                for i = 1, 20 do
+                    game:GetService("ReplicatedStorage").ThisGame.Calls.minionHelper:FireServer("minionHit", m)
+                    game:GetService("RunService").Heartbeat:wait()
+                end
+            end
+        end
+ end end
+ 
+ function sleighFuel()
+     for _, v in pairs(fun:GetChildren()) do
+         slay = v 
+     end
+     
+     repeat
+         wait()
+         if game:GetService("Workspace").sleighHolder[gamePlayer.Name]["Biplane Sleigh"].Configurations.Fuel.Value == 60 then
+             sleighremote:FireServer("updateFuel", slay, 100)
+         end
+     until unlimFuel == false
+ end
 
 
-
+ 
 
 
 about:Show()
 getbossList()
 getPVP()
+netBypass()
+game.Players.PlayerRemoving:Connect(playerLeft)
+game.Players.PlayerAdded:Connect(playerJoined)
+
+    for _, v in pairs(otherPlayers:GetPlayers()) do
+            magic_candies:Add(v)
+        end
 
 while wait() do
     if auto_boss == true then
@@ -2402,6 +2513,11 @@ while wait() do
     if killM == true then
         killMinions()
     end
+    
+    if unlimFuel == true then
+        spawn(sleighFuel)
+    end
+    
     
 end
 
