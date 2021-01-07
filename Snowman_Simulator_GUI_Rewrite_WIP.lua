@@ -2154,7 +2154,7 @@ local minion_god = minion_options:AddButton('God Mode', function() mGod() end)
 -- Player -- 
 local playerFolder = playerStuff:AddFolder('PVP')
 playerFolder:AddLabel('You must have PVP Enabled, to use these Options.')
-local pvp_dropdown = playerFolder:AddDropdown('PVP Enabled Players', function(value) pvpPlayer = value  getPVP() end)
+local pvp_dropdown = playerFolder:AddDropdown('PVP Enabled Players', function(value) pvpPlayer = value  end)
 local pvp_teleport = playerFolder:AddButton('Kill By Teleport', function() teleportKill() end)
 local pvp_killall = playerFolder:AddButton('Kill All', function() loadstring(game:HttpGet("https://scripts.dohmscripts.com/SnowManV2"))() end)
 
@@ -2379,7 +2379,8 @@ function teleportKill()
 end
     
 function playerLeft(player)
-    magic_candies:Remove(player)
+    local rem = magic_candies:Add(player)
+    rem.Remove()
     print('Removing '..player.Name..' from list')
 end
 
