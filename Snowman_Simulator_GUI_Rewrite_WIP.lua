@@ -2034,7 +2034,7 @@ local getMinions = game:GetService("Workspace"):GetDescendants()
 local pvpList = game:GetService("Players"):GetPlayers()
 local gameVector = Vector3.new(math.random(5000), y, math.random(5000))
 local bosses =  game:GetService("ReplicatedStorage").ThisGame.bosses
-local fun = game:GetService("Workspace").sleighHolder.DohmBoyOG
+--local fun = game:GetService("Workspace").sleighHolder.DohmBoyOG
 local sleighremote = game:GetService("ReplicatedStorage").ThisGame.Calls.sleighEvent
 -- Local Setup --
 
