@@ -28,7 +28,7 @@ local worldTeleports = {
     
 }
  
-gui = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/DohmBoyOG/UI/main/FluxUI.lua"))()
+gui = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/DohmBoyOG/UI/main/Universe.lua"))()
 
 local main = gui:Window('Gods of Glory','by DohmBoyOG')
  
