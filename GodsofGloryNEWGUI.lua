@@ -84,7 +84,7 @@ teleport_options:Button('[Button] Teleport','Teleports you to selected World', f
 about_options:Label('                                       Gods Of Glory GUI \n                                              Version 1.0')
 about_options:Line()
 about_options:Label('If you have any issues or questions\n please feel free to contact me on discord')
-about_options:Label('Press Left-Ctrl to toggle!')
+about_options:Label('Press Right-Ctrl to toggle UI')
 about_options:Line()
 about_options:Label('Discord: DohmBoyOG#0313')
 about_options:Label('Github: https://short.dohmscripts.com/ucg')
