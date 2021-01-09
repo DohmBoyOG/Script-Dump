@@ -199,7 +199,7 @@ end
 function flingCustom()
     for _, v in pairs(otherPlayer:GetPlayers()) do
         if v ~= thisPlayer then
-            for i = 1 , flingMulti do
+            for i = 1 , tonumber(flingMulti) do
                 flingStart:FireServer({
                     ["OtherCharacter"] = v.Character,
                     ["LV"] = Vector3.new(customXYZ)})
