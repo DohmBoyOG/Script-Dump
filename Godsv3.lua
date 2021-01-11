@@ -5,18 +5,20 @@ local worlds = game:GetService("Workspace").GameWorlds
 local flingStart = game:GetService("ReplicatedStorage").Remotes.KickOtherPlayer
 local remote = game:GetService("ReplicatedStorage").Remotes.BreakBuilding
 
-local GUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/aaaa"))()
+local GUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/UI/main/PlaystationUI.lua"))()
 
 local UI = GUI:CreateWindow("God Of Glory - DohmScripts - GUI v2")
 
 local Home = UI:addPage("Home",2,true,6)
 local LP = UI:addPage("Player",2,false,6)
-local Trolls = UI:addPage("Trolls",2,false,6)
+local Trolls = UI:addPage("Trolls",2,false,6)      
 local World = UI:addPage("World",2,false,6)
+local Settings = UI:addPage("Settings",2,false,6)
 
 local cash
 local tarPlyer 
 local rageMode
+local clipping
 
 Home:addLabel("Gods of Glory GUI v2")
 Home:addLabel("")
@@ -57,8 +59,66 @@ Trolls:addToggle('Rage Mode', function(bool) rageMode = bool end)
 World:addLabel('World', 'various options that effect the world')
 World:addLabel()
 World:addLabel('World Destruction', 'Destroys All worlds in the game')
-World:addButton('Nuke World', function() spawn(destructAllWorld) end)
+World:addButton('[Button] Nuke World', function() spawn(destructAllWorld) end)
 
+Settings:addLabel('Settings','various options you can change')
+Settings:addLabel()
+Settings:addButton('[Button] Network Bypass', function() netBypass() end)
+Settings:addButton('[Button] Twitter Codes', function() twitterCodes() end)
+Settings:addButton('[Button] Guard Godmode', function() spawn(gGod) end)
+Settings:addButton('[Button] Flight', function() loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/flyscript.lua"))() end)
+Settings:addToggle('NO CLIP', function(bool) clipping = bool if clipping == true then Noclipping = game:GetService('RunService').Stepped:connect(clipLoop) else Noclipping:Disconnect() end end)
+
+function netBypass()
+    print('Network Bypass Loaded.')
+    local NetworkAccess = coroutine.create(function()
+    settings().Physics.AllowSleep = false
+    while game:GetService("RunService").RenderStepped:Wait() do
+        for _, Players in next, game:GetService("Players"):GetPlayers() do
+            if Players ~= game:GetService("Players").LocalPlayer then
+                Players.MaximumSimulationRadius = 0 
+                sethiddenproperty(Players, "SimulationRadius", 0) 
+            end 
+        end
+        game:GetService("Players").LocalPlayer.MaximumSimulationRadius = math.pow(math.huge,math.huge)
+        setsimulationradius(math.huge) 
+    end 
+end) 
+coroutine.resume(NetworkAccess)
+end
+
+
+function twitterCodes()
+    codes = require(game:GetService("ReplicatedStorage").Sandbox.Codes).YoutuberCodes
+    print('----------- Begin Twitter Codes -----------')
+    for code, youtuber in pairs(codes) do
+    --game:GetService("ReplicatedStorage").Remotes.CodeItem:InvokeServer({
+       -- ["Value"] = code
+    --})
+    --wait(20)
+    print('[Code]: '..code..' [Youtuber:] '..youtuber)
+   end
+   print('------------- End Twitter Codes -------------')
+end
+
+
+
+function gGod()
+    local gmt = getrawmetatable(game)
+    local old = gmt.__namecall
+    
+    setreadonly(gmt, false)
+    
+    gmt.__namecall = newcclosure(function(self, ...)
+    local args = {...}
+    local method = getnamecallmethod()
+    if method == "FireServer" and self.Name == "DealDamage" then
+        print('Nothing can Stop us now!')
+        return nil
+    end
+    return old(self, ...)
+end)
+end
 
 function destructAllWorld()
     for _, v in ipairs(worlds:GetChildren()) do
