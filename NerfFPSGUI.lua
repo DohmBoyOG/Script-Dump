@@ -1,5 +1,8 @@
 if not getgenv().MTAPIMutex then loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/mt-api%20v2.lua", true))() end
 
+game.Players.LocalPlayer.Character.Humanoid:AddPropertyEmulator("WalkSpeed")
+game.Workspace:AddPropertyEmulator("Gravity")
+
 local event = game:GetService("ReplicatedStorage").sumiisbestgirl
 local thisPlayer = game:GetService("Players").LocalPlayer
 local otherPlayers = game:GetService("Players"):GetPlayers()
@@ -205,7 +208,9 @@ WepMod:addButton(
 Settings:addLabel('Settings', 'various fun settings!')
 Settings:addLabel('')
 Settings:addToggle('NO CLIP', function(bool) clipping = bool if clipping == true then Noclipping = game:GetService('RunService').Stepped:connect(clipLoop) else Noclipping:Disconnect() end end)
-Settings:addSlider('Movement Speed')
+Settings:addSlider('Movement Speed', 1, 100, function(value) game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value end)
+Settings:addSlider('Movement Speed', 1, 150, function(value) game.Workspace.Gravity = value end)
+Settings:addButton('Unlock Gamepasses', function() unlockPasses() end)
 
 
 function killTeam()
@@ -363,4 +368,19 @@ function clipLoop()
 end
 
 
+function unlockPasses()
+    
+    local mt = getrawmetatable(game)
+    local oldNamecall = mt.__namecall
+    setreadonly(mt, false)
+    mt.__namecall = newcclosure(function(self, ...)
+        local Method = getnamecallmethod()
+        if Method == 'UserOwnsGamePassAsync' or Method == 'PlayerOwnsAsset' or Method == 'PlayerHasPass' then
+            return true
+        end
+        return oldNamecall(self,...)
+    end)
+    setreadonly(mt, true)
+    warn('Games Passes Unlocked.')
+end
 
