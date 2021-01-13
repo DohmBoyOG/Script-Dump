@@ -1,3 +1,5 @@
+if not getgenv().MTAPIMutex then loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/mt-api%20v2.lua", true))() end
+
 local event = game:GetService("ReplicatedStorage").sumiisbestgirl
 local thisPlayer = game:GetService("Players").LocalPlayer
 local otherPlayers = game:GetService("Players"):GetPlayers()
@@ -199,7 +201,13 @@ WepMod:addButton(
     end
 )
 
+
+Settings:addLabel('Settings', 'various fun settings!')
+Settings:addLabel('')
 Settings:addToggle('NO CLIP', function(bool) clipping = bool if clipping == true then Noclipping = game:GetService('RunService').Stepped:connect(clipLoop) else Noclipping:Disconnect() end end)
+Settings:addSlider('Movement Speed')
+
+
 function killTeam()
     for _, v in pairs(otherPlayers) do
         if v.Character and v.TeamColor ~= thisPlayer.TeamColor and v ~= thisPlayer then
