@@ -1,9 +1,10 @@
---loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/ZHZH0MIYKR.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/ZHZH0MIYKR.lua"))()
 
 if not getgenv().MTAPIMutex then loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/mt-api%20v2.lua", true))() end
 
 game.Players.LocalPlayer.Character.Humanoid:AddPropertyEmulator("WalkSpeed")
 game.Workspace:AddPropertyEmulator("Gravity")
+game.Players.LocalPlayer.Character.Humanoid:AddPropertyEmulator("WalkSpeed")
 
 local event = game:GetService("ReplicatedStorage").sumiisbestgirl
 local thisPlayer = game:GetService("Players").LocalPlayer
