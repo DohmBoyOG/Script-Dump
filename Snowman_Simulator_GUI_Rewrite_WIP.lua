@@ -2030,7 +2030,7 @@ local getMinions = game:GetService("Workspace"):GetDescendants()
 local pvpList = game:GetService("Players"):GetPlayers()
 local gameVector = Vector3.new(math.random(5000), y, math.random(5000))
 local bosses =  game:GetService("ReplicatedStorage").ThisGame.bosses
---local fun = game:GetService("Workspace").sleighHolder.DohmBoyOG
+local sHolder = game:GetService("Workspace").sleighHolder
 local sleighremote = game:GetService("ReplicatedStorage").ThisGame.Calls.sleighEvent
 -- Local Setup --
 
@@ -2075,7 +2075,7 @@ local playerStuff = window:AddTab('Player')
 -- About Frame --
 about:AddLabel(' [ Snowman Simulator GUI ]')
 about:AddLabel(' Made By DohmBoyOG')
-about:AddLabel(' Current Version: 2.1')
+about:AddLabel(' Current Version: 2.2')
 about:AddLabel('')
 about:AddLabel(' Discord: DohmBoyOG#0313')
 about:AddLabel(' GitHub: https://short.dohmscripts.com/ucg')
@@ -2091,7 +2091,7 @@ about:AddLabel(' in the boss farm under Toggleables or it wt do anything')
 about:AddLabel(' i recommand 1 for Haste and 20 for Damage Multiplyer')
 about:AddLabel('')
 about:AddLabel(' [Changelog]')
-about:AddLabel('1/7/2021 New Update! Check Logs!')
+about:AddLabel('1/13/21 New Update! Check Logs!')
 about:AddLabel(' Goto https://short.dohmscripts.com/Changelog')
 about:AddLabel('')
 about:AddLabel(' Features Planned for next update')
@@ -2464,17 +2464,21 @@ wait()
  end end
  
  function sleighFuel()
-     for _, v in pairs(fun:GetChildren()) do
-         slay = v 
-     end
-     
-     repeat
-         wait()
-         if game:GetService("Workspace").sleighHolder[gamePlayer.Name]["Biplane Sleigh"].Configurations.Fuel.Value == 60 then
-             sleighremote:FireServer("updateFuel", slay, 100)
+     for _, v in pairs(sHolder:GetChildren()) do
+         if v:IsA('Folder') and v.Name == gamePlayer.Name then
+             for _, slays in pairs(v:GetChildren()) do
+                 slay = slays
+             end
+             repeat
+                 wait()
+                 if tostring(slay.Configurations.Fuel.Value) == 60 then
+                     sleighremote:FireServer("updateFuel", slay, 100)
+                 end
+             until unlimFuel == false
          end
-     until unlimFuel == false
+     end
  end
+ 
 
 
  
