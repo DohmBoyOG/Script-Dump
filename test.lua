@@ -1,8 +1,3 @@
-local player = game.Players.LocalPlayer
-local players = {} -- Table to get the players
-local core = game:GetService("CoreGui")
-
-
 function GetEnemyPlayers()
     players = {}
     if #game:GetService("Teams"):GetTeams() > 0 then
@@ -64,15 +59,19 @@ function UpdatePlayerChams()
                             name.TextColor3 = Color3.new(1, 1, 1)
                             name.BackgroundTransparency = 1
                             else
-                                v.Character.Head.NameEsp.TextLabel.Text = (v.Name .." " ..round((game:GetService("Players").LocalPlayer.Character.Head.Position -v.Character.Head.Position).Magnitude / 3) .."m")
-                        end
+                                v.Character.Head.NameEsp.TextLabel.Text = (v.Name ..
+                            " " ..
+                                round(
+                                    (game:GetService("Players").LocalPlayer.Character.Head.Position -
+                                        v.Character.Head.Position).Magnitude / 3
+                                ) ..
+                                    "m")
                     end
                 end
-                )
             end
+        )
     end
 end
-
 
 while wait() do
     UpdatePlayerChams()
