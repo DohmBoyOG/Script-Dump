@@ -408,12 +408,20 @@ function unlockPasses()
     warn('Games Passes Unlocked.')
 end
 
+function isSameTeam(Player, Player2)
+	if game.ReplicatedStorage.ServerSettings.Mode.Value == "GUN GAME" or game.ReplicatedStorage.ServerSettings.Mode.Value == "FREE FOR ALL" then
+		return false
+	else
+		return Player.TeamColor == Player2.TeamColor and true or false
+	end
+end
+
 function GetEnemyPlayers()
     players = {}
     if #game:GetService("Teams"):GetTeams() > 0 then
         local friendly = thisPlayer.Team.Name
         for i, v in pairs(game:GetService("Teams"):GetTeams()) do
-            if v.Name ~= friendly and v.Name ~= (game.Teams:FindFirstChild("Spectators") and game.Teams.Spectators.Name) then
+            if v ~= game.Players.LocalPlayer and  not isSameTeam(v, game.Players.LocalPlayer) then
                 print("Enemy team: " .. v.Name)
                 local enemyPlayers = v:GetPlayers()
                 for i, v in pairs(enemyPlayers) do
