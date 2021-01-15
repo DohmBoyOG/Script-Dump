@@ -1,10 +1,9 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/ZHZH0MIYKR.lua"))()
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/ZHZH0MIYKR.lua"))()
 
 if not getgenv().MTAPIMutex then loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/mt-api%20v2.lua", true))() end
 
 game.Players.LocalPlayer.Character.Humanoid:AddPropertyEmulator("WalkSpeed")
 game.Workspace:AddPropertyEmulator("Gravity")
-game.Players.LocalPlayer.Character.Humanoid:AddPropertyEmulator("WalkSpeed")
 
 local event = game:GetService("ReplicatedStorage").sumiisbestgirl
 local thisPlayer = game:GetService("Players").LocalPlayer
@@ -68,6 +67,8 @@ local Player = UI:addPage("Player", 2, false, 6)
 local WepMod = UI:addPage("Weapon", 3, false, 6)
 local Voted = UI:addPage("Voting", 3, false, 6)
 local Settings = UI:addPage("Settings", 2, false, 6)
+
+local voteLimit
 
 local a
 local b
@@ -222,9 +223,10 @@ WepMod:addButton(
     end
 )
 
---Voted:addLabel('Voting','various options for changing votes')
---Voted:addLabel('')
----Voted:addDropdown('Gamemode',function() return game.Players:GetPlayers() end)
+Voted:addLabel('Voting','various options for changing votes')
+Voted:addLabel('')
+Voted:addToggle('Unlimited Votes', function(bool) voteLimit = bool end)
+
 
 Settings:addLabel('Settings', 'various fun settings!')
 Settings:addLabel('')
@@ -495,10 +497,31 @@ function trashBin()
 end
 
 
+function voteKnocks()
+    while voteVis() == true do
+        wait(0.3)
+        local votemenu = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("GUI")
+        votemenu.Menu.Deploy.Voting.DiduvotealreadyMAP.Value = 'no'
+        votemenu.Menu.Deploy.Voting.DiduvotealreadyGAMEMODE.Value = 'no'
+    end
+    print('Voting Knocking.')
+end
+
+function voteVis()
+    local votemenu = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("GUI")
+    if votemenu.Menu.Deploy.Voting.Visible == true then
+        return true
+        else
+            return false
+    end
+end
+
 while wait() do
     if esp == true then
         UpdatePlayerChams()
     end
-end
 
-        
+    if voteLimit == true then
+        voteKnocks()
+    end
+end
