@@ -60,7 +60,7 @@ gunlist = {
 
 local GUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/UI/main/PlaystationUI.lua"))()
 
-local UI = GUI:CreateWindow("Nerf FPS - DohmScripts - GUI v2")
+local UI = GUI:CreateWindow("Nerf FPS - DohmScripts - GUI v2.1")
 
 local Home = UI:addPage("Home", 2, true, 6)
 local Player = UI:addPage("Player", 2, false, 6)
