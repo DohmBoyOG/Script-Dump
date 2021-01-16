@@ -1,9 +1,11 @@
---loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/ZHZH0MIYKR.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/ZHZH0MIYKR.lua"))()
 
-if not getgenv().MTAPIMutex then loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/mt-api%20v2.lua", true))() end
+--if not getgenv().MTAPIMutex then
+   -- loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/mt-api%20v2.lua", true))()
+--end
 
-game.Players.LocalPlayer.Character.Humanoid:AddPropertyEmulator("WalkSpeed")
-game.Workspace:AddPropertyEmulator("Gravity")
+--game.Players.LocalPlayer.Character.Humanoid:AddPropertyEmulator("WalkSpeed")
+--game.Workspace:AddPropertyEmulator("Gravity")
 
 local event = game:GetService("ReplicatedStorage").sumiisbestgirl
 local thisPlayer = game:GetService("Players").LocalPlayer
@@ -15,7 +17,7 @@ local core = game:GetService("CoreGui")
 local vote = game:GetService("ReplicatedStorage").Voting
 local voteUI = game:GetService("Players").LocalPlayer.PlayerGui.GUI.Menu.Deploy.Voting
 
-local firstMode = game:GetService("ReplicatedStorage").Voting.firstgamemode.Value 
+local firstMode = game:GetService("ReplicatedStorage").Voting.firstgamemode.Value
 local secondMode = game:GetService("ReplicatedStorage").Voting.secondgamemode.Value
 
 local voteEvent = game:GetService("ReplicatedStorage").Vote
@@ -223,19 +225,59 @@ WepMod:addButton(
     end
 )
 
-Voted:addLabel('Voting','various options for changing votes')
-Voted:addLabel('')
-Voted:addToggle('Unlimited Votes', function(bool) voteLimit = bool end)
+Voted:addLabel("Voting", "various options for changing votes")
+Voted:addLabel("")
+Voted:addToggle(
+    "Unlimited Votes",
+    function(bool)
+        voteLimit = bool
+    end
+)
 
-
-Settings:addLabel('Settings', 'various fun settings!')
-Settings:addLabel('')
-Settings:addToggle('Enemy ESP', function(bool) esp = bool if bool == false then trashBin() end end)
-Settings:addToggle('NO CLIP', function(bool) clipping = bool if clipping == true then Noclipping = game:GetService('RunService').Stepped:connect(clipLoop) else Noclipping:Disconnect() end end)
-Settings:addSlider('Movement Speed', 1, 100, function(value) game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value end)
-Settings:addSlider('Gravity', 1, 150, function(value) game.Workspace.Gravity = value end)
-Settings:addButton('Unlock Gamepasses', function() unlockPasses() end)
-
+Settings:addLabel("Settings", "various fun settings!")
+Settings:addLabel("")
+Settings:addToggle(
+    "Enemy ESP",
+    function(bool)
+        esp = bool
+        if bool == false then
+            trashBin()
+        end
+    end
+)
+Settings:addToggle(
+    "NO CLIP",
+    function(bool)
+        clipping = bool
+        if clipping == true then
+            Noclipping = game:GetService("RunService").Stepped:connect(clipLoop)
+        else
+            Noclipping:Disconnect()
+        end
+    end
+)
+Settings:addSlider(
+    "Movement Speed",
+    1,
+    100,
+    function(value)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+    end
+)
+Settings:addSlider(
+    "Gravity",
+    1,
+    150,
+    function(value)
+        game.Workspace.Gravity = value
+    end
+)
+Settings:addButton(
+    "Unlock Gamepasses",
+    function()
+        unlockPasses()
+    end
+)
 
 function killTeam()
     for _, v in pairs(otherPlayers) do
@@ -281,7 +323,7 @@ function modGun()
             mods.maxclip = c
             mods.stored = d
             mods.bullet = e
-             -- [dart], [ball], [stefan], [elite], [mega], [rocket], [sword] <-- lol? --
+            -- [dart], [ball], [stefan], [elite], [mega], [rocket], [sword] <-- lol? --
             mods.range = f
             mods.rate = g
             mods.zoom = h -- [Be careful messing with this one. you could end up too zoomed!] --
@@ -391,29 +433,33 @@ function clipLoop()
     end
 end
 
-
 function unlockPasses()
-    
     local mt = getrawmetatable(game)
     local oldNamecall = mt.__namecall
     setreadonly(mt, false)
-    mt.__namecall = newcclosure(function(self, ...)
-        local Method = getnamecallmethod()
-        if Method == 'UserOwnsGamePassAsync' or Method == 'PlayerOwnsAsset' or Method == 'PlayerHasPass' then
-            return true
+    mt.__namecall =
+        newcclosure(
+        function(self, ...)
+            local Method = getnamecallmethod()
+            if Method == "UserOwnsGamePassAsync" or Method == "PlayerOwnsAsset" or Method == "PlayerHasPass" then
+                return true
+            end
+            return oldNamecall(self, ...)
         end
-        return oldNamecall(self,...)
-    end)
+    )
     setreadonly(mt, true)
-    warn('Games Passes Unlocked.')
+    warn("Games Passes Unlocked.")
 end
 
 function isSameTeam(Player, Player2)
-	if game.ReplicatedStorage.ServerSettings.Mode.Value == "GUN GAME" or game.ReplicatedStorage.ServerSettings.Mode.Value == "FREE FOR ALL" then
-		return false
-	else
-		return Player.TeamColor == Player2.TeamColor and true or false
-	end
+    if
+        game.ReplicatedStorage.ServerSettings.Mode.Value == "GUN GAME" or
+            game.ReplicatedStorage.ServerSettings.Mode.Value == "FREE FOR ALL"
+     then
+        return false
+    else
+        return Player.TeamColor == Player2.TeamColor and true or false
+    end
 end
 
 function GetEnemyPlayers()
@@ -421,8 +467,7 @@ function GetEnemyPlayers()
     if #game:GetService("Teams"):GetTeams() > 0 then
         local friendly = thisPlayer.Team.Name
         for i, v in pairs(game:GetService("Teams"):GetTeams()) do
-            if v ~= game.Players.LocalPlayer and  not isSameTeam(v, game.Players.LocalPlayer) then
-                print("Enemy team: " .. v.Name)
+            if v ~= game.Players.LocalPlayer and not isSameTeam(v, game.Players.LocalPlayer) then
                 local enemyPlayers = v:GetPlayers()
                 for i, v in pairs(enemyPlayers) do
                     table.insert(players, v)
@@ -432,9 +477,6 @@ function GetEnemyPlayers()
         return players
     end
 end
-
-
-
 
 function isnil(thing)
     return (thing == nil)
@@ -461,7 +503,7 @@ function UpdatePlayerChams()
                                 cham.Transparency = .7
                                 cham.Color3 = Color3.new(1, 0, 0)
                                 cham.Name = "Cham"
-                                end
+                            end
                         end
                         if not isnil(v.Character.Head) and not v.Character.Head:FindFirstChild "NameEsp" then
                             local bill = Instance.new("BillboardGui", v.Character.Head)
@@ -471,18 +513,32 @@ function UpdatePlayerChams()
                             bill.AlwaysOnTop = true
                             local name = Instance.new("TextLabel", bill)
                             name.TextWrapped = true
-                            name.Text = (v.Name .." " ..round((game:GetService("Players").LocalPlayer.Character.Head.Position -v.Character.Head.Position).Magnitude / 3) .."m")
+                            name.Text =
+                                (v.Name ..
+                                " " ..
+                                    round(
+                                        (game:GetService("Players").LocalPlayer.Character.Head.Position -
+                                            v.Character.Head.Position).Magnitude / 3
+                                    ) ..
+                                        "m")
                             name.Size = UDim2.new(1, 0, 1, 0)
                             name.TextYAlignment = "Top"
                             name.TextColor3 = Color3.new(1, 1, 1)
                             name.BackgroundTransparency = 1
-                            else
-                                v.Character.Head.NameEsp.TextLabel.Text = (v.Name .." " ..round((game:GetService("Players").LocalPlayer.Character.Head.Position -v.Character.Head.Position).Magnitude / 3) .."m")
+                        else
+                            v.Character.Head.NameEsp.TextLabel.Text =
+                                (v.Name ..
+                                " " ..
+                                    round(
+                                        (game:GetService("Players").LocalPlayer.Character.Head.Position -
+                                            v.Character.Head.Position).Magnitude / 3
+                                    ) ..
+                                        "m")
                         end
                     end
                 end
-                )
-            end
+            )
+        end
     end
 end
 
@@ -492,7 +548,7 @@ function trashBin()
         if not isnil(v.Character) then
             for _, k in pairs(v.Character:GetChildren()) do
                 if k:FindFirstChild("Cham") then
-                   k.Cham:Destroy()
+                    k.Cham:Destroy()
                 end
             end
             if not isnil(v.Character.Head) and not isnil(v.Character.Head:FindFirstChild("NameEsp")) then
@@ -504,23 +560,22 @@ function trashBin()
     end
 end
 
-
 function voteKnocks()
     while voteVis() == true do
         wait(0.3)
         local votemenu = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("GUI")
-        votemenu.Menu.Deploy.Voting.DiduvotealreadyMAP.Value = 'no'
-        votemenu.Menu.Deploy.Voting.DiduvotealreadyGAMEMODE.Value = 'no'
+        votemenu.Menu.Deploy.Voting.DiduvotealreadyMAP.Value = "no"
+        votemenu.Menu.Deploy.Voting.DiduvotealreadyGAMEMODE.Value = "no"
     end
-    print('Voting Knocking.')
+    print("Voting Knocking.")
 end
 
 function voteVis()
     local votemenu = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("GUI")
     if votemenu.Menu.Deploy.Voting.Visible == true then
         return true
-        else
-            return false
+    else
+        return false
     end
 end
 
