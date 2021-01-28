@@ -35,5 +35,5 @@ Main.Active = true
 Main.Draggable = true
 
  Launch.MouseButton1Click:Connect(function()
-   loadstring(game:HttpGet(('https://pastebin.com/raw/nwTkRqtg'),true))()
+   loadstring(game:HttpGet(('https://pastebin.com/raw/qiruvBTf'),true))()
 end)
