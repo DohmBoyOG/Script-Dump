@@ -78,9 +78,6 @@ function findBall()
             game:GetService("ReplicatedStorage").Events.Update:FireServer()
             wait(5)
             Teleport()
-        else
-            wait(5)
-            Teleport()
         end
     end
 end
@@ -88,6 +85,9 @@ end
 
 
 findBall()
+wait(10)
+Teleport()
+
 
     
 
