@@ -1,4 +1,4 @@
-getgenv().DohmColor
+getgenv().DohmColor = Color3.new(25,23,45)
 
 local function DestroyYep()
     for x = 1,69 do 
