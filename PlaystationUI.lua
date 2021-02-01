@@ -1,4 +1,5 @@
--- don't judge :rage:
+getgenv().DohmColor = 255, 128, 179
+
 local function DestroyYep()
     for x = 1,69 do 
         if game.CoreGui:FindFirstChild("fu8rj82n") then game.CoreGui:FindFirstChild("fu8rj82n"):Destroy() end
@@ -93,7 +94,7 @@ function Library:CreateWindow(windowname,windowinfo)
     Title.Size = UDim2.new(0, 355, 0, 33)
     Title.Font = Enum.Font.GothamSemibold
     Title.Text = windowname
-    Title.TextColor3 = Color3.fromRGB(255, 128, 179)
+    Title.TextColor3 = getgenv().DohmColor
     Title.TextSize = 14.000
     Title.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -128,10 +129,9 @@ function Library:CreateWindow(windowname,windowinfo)
     YepTitle.Size = UDim2.new(0, 128, 0, 33)
     YepTitle.Font = Enum.Font.GothamSemibold
     YepTitle.Text = windowinfo or "UI Made by Bytes#0001"
-    YepTitle.TextColor3 = Color3.fromRGB(255, 128, 179)
+    YepTitle.TextColor3 = getgenv().DohmColor
     YepTitle.TextSize = 9.000
     YepTitle.TextTransparency = 1.000
-    print("derek cool")
     YepCorner.Name = "YepCorner"
     YepCorner.Parent = YepTitle
 
@@ -155,7 +155,7 @@ function Library:CreateWindow(windowname,windowinfo)
 		YepTitle.BackgroundTransparency = 0.8
 		YepTitle.TextTransparency = 0.5
 		-- cre
-		Cre.ImageColor3 = Color3.fromRGB(255, 128, 179)
+		Cre.ImageColor3 = Color3.fromRGB(255,255,255)
 		wait(0.05)
 		YepTitle.BackgroundTransparency = 1
 		YepTitle.TextTransparency = 1
@@ -222,7 +222,7 @@ function Library:CreateWindow(windowname,windowinfo)
         Tab.AutoButtonColor = false
         Tab.Font = Enum.Font.GothamSemibold
         Tab.Text = pagename or "nil"
-        Tab.TextColor3 = Color3.fromRGB(255, 128, 179)
+        Tab.TextColor3 = getgenv().DohmColor
         Tab.TextSize = 11.000
         Tab.TextTransparency = 0.300
         
@@ -243,7 +243,6 @@ function Library:CreateWindow(windowname,windowinfo)
         Home.ScrollBarImageColor3 = Color3.fromRGB(5,5,5)
         Home.CanvasSize = UDim2.new(0,0,scrollsize,0) or UDim2.new(0,0,4,0)
         Home.Visible = visible or false
-        print("the um")
         PageLayout.Name = "PageLayout"
         PageLayout.Parent = Home
         PageLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -316,7 +315,7 @@ function Library:CreateWindow(windowname,windowinfo)
             LabelTitle.Size = UDim2.new(0, 288, 0, 15)
             LabelTitle.Font = Enum.Font.GothamSemibold
             LabelTitle.Text = labelname or ""
-            LabelTitle.TextColor3 = Color3.fromRGB(255, 128, 179)
+            LabelTitle.TextColor3 = getgenv().DohmColor
             LabelTitle.TextSize = 11.000
             
             LabelInfo.Name = "LabelInfo"
@@ -329,7 +328,7 @@ function Library:CreateWindow(windowname,windowinfo)
             LabelInfo.Size = UDim2.new(0, 288, 0, 9)
             LabelInfo.Font = Enum.Font.GothamSemibold
             LabelInfo.Text = labelinfo or ""
-            LabelInfo.TextColor3 = Color3.fromRGB(255, 128, 179)
+            LabelInfo.TextColor3 = getgenv().DohmColor
             LabelInfo.TextSize = 9.000
             LabelInfo.TextTransparency = 0.300
         end
@@ -360,7 +359,7 @@ function Library:CreateWindow(windowname,windowinfo)
             Button.AutoButtonColor = false
             Button.Font = Enum.Font.GothamSemibold
             Button.Text = buttonname
-            Button.TextColor3 = Color3.fromRGB(255, 128, 179)
+            Button.TextColor3 = getgenv().DohmColor
             Button.TextSize = 11.000
             
             ButtonCorner.CornerRadius = UDim.new(0, 5)
@@ -415,7 +414,7 @@ function Library:CreateWindow(windowname,windowinfo)
             ToggleTitle.Size = UDim2.new(0, 195, 0, 24)
             ToggleTitle.Font = Enum.Font.GothamSemibold
             ToggleTitle.Text = togglename or ""
-            ToggleTitle.TextColor3 = Color3.fromRGB(255, 128, 179)
+            ToggleTitle.TextColor3 = getgenv().DohmColor
             ToggleTitle.TextSize = 11.000
             ToggleTitle.TextXAlignment = Enum.TextXAlignment.Left
             
@@ -444,7 +443,7 @@ function Library:CreateWindow(windowname,windowinfo)
             
             ToggleBall.Name = "ToggleBall"
             ToggleBall.Parent = ToggleFrame
-            ToggleBall.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            ToggleBall.BackgroundColor3 = getgenv().DohmColor
             ToggleBall.Position = UDim2.new(0.123000003, 0, 0.158000007, 0)
             ToggleBall.Size = UDim2.new(0, 14, 0, 12)
             
@@ -501,7 +500,7 @@ function Library:CreateWindow(windowname,windowinfo)
             SliderTitle.Size = UDim2.new(0, 239, 0, 8)
             SliderTitle.Font = Enum.Font.GothamSemibold
             SliderTitle.Text = slidername
-            SliderTitle.TextColor3 = Color3.fromRGB(255, 128, 179)
+            SliderTitle.TextColor3 = getgenv().DohmColor
             SliderTitle.TextSize = 11.000
             SliderTitle.TextXAlignment = Enum.TextXAlignment.Left
             
@@ -544,7 +543,7 @@ function Library:CreateWindow(windowname,windowinfo)
             SliderNumber.Size = UDim2.new(0, 33, 0, 6)
             SliderNumber.Font = Enum.Font.GothamSemibold
             SliderNumber.Text = minvalue or "0"
-            SliderNumber.TextColor3 = Color3.fromRGB(255, 128, 179)
+            SliderNumber.TextColor3 = getgenv().DohmColor
             SliderNumber.TextSize = 10.000
             SliderNumber.TextXAlignment = Enum.TextXAlignment.Left
              
@@ -604,7 +603,7 @@ function Library:CreateWindow(windowname,windowinfo)
             TextBoxTitle.Size = UDim2.new(0, 195, 0, 21)
             TextBoxTitle.Font = Enum.Font.GothamSemibold
             TextBoxTitle.Text = textboxname
-            TextBoxTitle.TextColor3 = Color3.fromRGB(255, 128, 179)
+            TextBoxTitle.TextColor3 = getgenv().DohmColor
             TextBoxTitle.TextSize = 11.000
             TextBoxTitle.TextXAlignment = Enum.TextXAlignment.Left
             
@@ -614,7 +613,7 @@ function Library:CreateWindow(windowname,windowinfo)
             TextBox.Size = UDim2.new(0, 72, 0, 20)
             TextBox.Font = Enum.Font.GothamSemibold
             TextBox.Text = textboxdefault or "nil"
-            TextBox.TextColor3 = Color3.fromRGB(255, 128, 179)
+            TextBox.TextColor3 = getgenv().DohmColor
             TextBox.TextSize = 9.000
             
             TextBoxCorner.CornerRadius = UDim.new(0, 5)
@@ -672,13 +671,13 @@ function Library:CreateWindow(windowname,windowinfo)
             DropdownTitle.Size = UDim2.new(0, 195, 0, 24)
             DropdownTitle.Font = Enum.Font.GothamSemibold
             DropdownTitle.Text = dropdownname
-            DropdownTitle.TextColor3 = Color3.fromRGB(255, 128, 179)
+            DropdownTitle.TextColor3 = getgenv().DohmColor
             DropdownTitle.TextSize = 11.000
             DropdownTitle.TextXAlignment = Enum.TextXAlignment.Left
             
             DropdownButton.Name = "DropdownButton"
             DropdownButton.Parent = DropdownHolder
-            DropdownButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            DropdownButton.BackgroundColor3 = getgenv().DohmColor
             DropdownButton.BackgroundTransparency = 1.000
             DropdownButton.Size = UDim2.new(0, 288, 0, 26)
             DropdownButton.Font = Enum.Font.SourceSans
@@ -754,7 +753,7 @@ function Library:CreateWindow(windowname,windowinfo)
                     DropdownOptionContainer:TweenSize(UDim2.new(0, 288,0, 106),"Out","Linear",0.1)-- check
                 else
                     DropDownEnabled = false
-                    DropdownIcon.ImageColor3 = Color3.fromRGB(255, 128, 179)
+                    DropdownIcon.ImageColor3 = Color3.fromRGB(255,255,255)
                     DropdownOptionContainer:TweenSize(UDim2.new(0, 288,0, 8),"Out","Linear",0.2)
                     wait(0.2)
                     DropdownOptionContainer.Visible = false
@@ -781,7 +780,7 @@ function Library:CreateWindow(windowname,windowinfo)
                 Option.AutoButtonColor = false
                 Option.Font = Enum.Font.GothamSemibold
                 Option.Text = v
-                Option.TextColor3 = Color3.fromRGB(255, 128, 179)
+                Option.TextColor3 = getgenv().DohmColor
                 Option.TextSize = 10.000
                 
                 OptionCorner.CornerRadius = UDim.new(0, 6)
@@ -799,7 +798,7 @@ function Library:CreateWindow(windowname,windowinfo)
                 Option.MouseButton1Down:Connect(function()
                     for i,v in pairs(Option.Parent:GetChildren()) do
                         if v:IsA("GuiButton") and v ~= Option then
-                            v.TextColor3 = Color3.fromRGB(255, 128, 179)
+                            v.TextColor3 = Color3.fromRGB(255,255,255)
                         end
                     end
                     Option.TextColor3 = Color3.fromRGB(137, 246, 255)
@@ -807,7 +806,7 @@ function Library:CreateWindow(windowname,windowinfo)
 
                 Option.MouseButton1Down:Connect(function()
                     DropDownEnabled = false
-                    DropdownIcon.ImageColor3 = Color3.fromRGB(255, 128, 179)
+                    DropdownIcon.ImageColor3 = Color3.fromRGB(255,255,255)
                     DropdownOptionContainer:TweenSize(UDim2.new(0, 288,0, 8),"Out","Linear",0.2)
                     wait(0.2)
                     DropdownOptionContainer.Visible = false
