@@ -1,6 +1,6 @@
 --[ Keep in mind, the options still need to be unlocked in game, for you to create a Dungeon of that type and Difficulty Mode]
 
-getgenv().Auto = true --[ No need to change this setting.]
+getgenv().Auto = true --[ You can now turn this to false and it won't teleport you to a Dungeon ]
 getgenv().Difficulty = "Easy" --[ Easy, Medium, Hard, Expert ]
 getgenv().PartyOnly = true --[True/False]
 getgenv().Hardcore = true --[True/False]
