@@ -2032,6 +2032,7 @@ local gameVector = Vector3.new(math.random(5000), y, math.random(5000))
 local bosses =  game:GetService("ReplicatedStorage").ThisGame.bosses
 local sHolder = game:GetService("Workspace").sleighHolder
 local sleighremote = game:GetService("ReplicatedStorage").ThisGame.Calls.sleighEvent
+local boxs = game:GetService("Workspace").giftSpawns
 -- Local Setup --
 
 -- Tables --
@@ -2050,6 +2051,7 @@ local autoSell
 local pvpPlayer
 local unlimFuel
 local killM
+local pFarm
 local mc
 local haste = 0
 local dm = 0
@@ -2146,6 +2148,10 @@ local minion_toggle = minionFolder:AddSwitch('Start', function(bool) killM = boo
 local minion_options = minionFolder:AddFolder('Options')
 local minion_god = minion_options:AddButton('God Mode', function() mGod() end)
 -- Minions --
+
+-- Presents --
+local presentFolder = autos:AddFolder('Presents')
+local presents_toggle = presentFolder:AddSwitch('Start', function(bool) pFarm = bool end)
 
 -- Player -- 
 local playerFolder = playerStuff:AddFolder('PVP')
@@ -2479,6 +2485,20 @@ wait()
      end
  end
  
+function giftFarm()
+    for _, v in pairs(boxs:GetDescendants()) do
+        if v:IsA("ProximityPrompt") then
+            gamePlayer.Character.HumanoidRootPart.CFrame = v.Parent.Parent.CFrame
+            wait(1)
+            fireproximityprompt(v, 10)
+            v.Parent.Parent:WaitForChild("unwrapProgressBar")
+            repeat
+                wait()
+            until not v.Parent.Parent:FindFirstChild("unwrapProgressBar")
+        end
+    end
+end
+
 
 
  
@@ -2524,6 +2544,11 @@ while wait() do
     if unlimFuel == true then
         spawn(sleighFuel)
     end
+    
+    if pFarm == true then
+        giftFarm()
+    end
+    
     
     
 end
