@@ -12,7 +12,7 @@ getgenv().AutoPoint = false
 getgenv().SkillPoints = 5 --[How many points you want to wait to to get before it starts]
 getgenv().SkilltoPut = "Strength" --[ Strength, Magic, Health ]
 getgenv().PlayerHeight = -10 --[ adjust the height of yourself while your autofarming]
-
+getgenv().RangeAngle = false --[ Maximum Range and Angle of weapons ]
 getgenv().GameSettings = {
     AutoSell = {
         ["Cosmetic"] = false,
