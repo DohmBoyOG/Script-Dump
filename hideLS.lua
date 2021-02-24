@@ -1,0 +1,1 @@
+ loadstring(game:HttpGet(('https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/Hide_Seek_DohmScripts_Public.lua'),true))()
