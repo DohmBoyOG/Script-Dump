@@ -1,0 +1,1 @@
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/ROWizard_AutoBuy_DohmScripts_Public.lua"))()
