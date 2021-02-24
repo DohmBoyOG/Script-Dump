@@ -1,0 +1,1 @@
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/AceofSpade_DohmScripts_Public.lua"))()
