@@ -23,7 +23,7 @@ getgenv().GameSettings = {
      Player = {
         ['HideName'] = false, 
         ["NoMeleeCoolDown"] = false, 
-        ["PlayerHeight"] = -15,
+        ["PlayerHeight"] = -20,
         ["RangeAngle"] = true, --[ Always Set to true unless you know what your doing ]--
     },
     Skill = {
