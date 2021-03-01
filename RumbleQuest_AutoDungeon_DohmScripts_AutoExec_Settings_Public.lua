@@ -1,27 +1,35 @@
 --[ Keep in mind, the options still need to be unlocked in game, for you to create a Dungeon of that type and Difficulty Mode]
+--[ Auto Sell can be buggy sometimes, as always i am not responsible for the wrong items being sold, it has a 99% chance of not happening but just in case]
 
-getgenv().Auto = true --[ You can now turn this to false and it won't teleport you to a Dungeon ]
-getgenv().Difficulty = "Easy" --[ Easy, Medium, Hard, Expert ]
-getgenv().PartyOnly = true --[True/False]
-getgenv().Hardcore = true --[True/False]
-getgenv().Location = "Caves" --[ Dungeon Name]
-getgenv().AutoSell = true
-getgenv().HideName = false
-getgenv().NoMeleeCoolDown = false
-getgenv().AutoPoint = false
-getgenv().SkillPoints = 5 --[How many points you want to wait to to get before it starts]
-getgenv().SkilltoPut = "Strength" --[ Strength, Magic, Health ]
-getgenv().PlayerHeight = -10 --[ adjust the height of yourself while your autofarming]
-getgenv().RangeAngle = false --[ Maximum Range and Angle of weapons ]
 getgenv().GameSettings = {
-    AutoSell = {
+    AutoSell = { 
+        ['Active'] = false, --[ On or Off ]--
         ["Cosmetic"] = false,
-        ["CosmeticRarity"] = {["Common"] = true, ["Unique"] = true, ["Rare"] = true, ["Epic"] = false},
+        ["CosmeticRarity"] = {["Common"] = false, ["Unique"] = false, ["Rare"] = false, ["Epic"] = false, ["Lengendary"] = false},
         ["Armor"] = false,
-        ["ArmorRarity"] = {["Common"] = true, ["Unique"] = true, ["Rare"] = true, ["Epic"] = true},
+        ["ArmorRarity"] = {["Common"] = false, ["Unique"] = false, ["Rare"] = false, ["Epic"] = false, ["Lengendary"] = false},
         ["Weapon"] = false,
-        ["WeaponRarity"] = {["Common"] = true, ["Unique"] = true, ["Rare"] = true, ["Epic"] = true},
-        ["Ability"] = false
+        ["WeaponRarity"] = {["Common"] = false, ["Unique"] = false, ["Rare"] = false, ["Epic"] = false, ["Lengendary"] = false},
+        ["Ability"] = false,
+        ["AbilityRarity"] = {["Common"] = false, ["Unique"] = false, ["Rare"] = false, ["Epic"] = false,["Lengendary"] = false},
+    },
+    Dungeon = {
+        ["Active"] = false, --[ On or Off ]--
+        ["Difficulty"] = "Easy", --[ Easy, Medium, Hard, Expert ]
+        ["PartyOnly"] = false,
+        ["Hardcore"] = false,
+        ["Location"] = "Caves" --[ Dungeon Name]
+    },
+     Player = {
+        ['HideName'] = false, 
+        ["NoMeleeCoolDown"] = false, 
+        ["PlayerHeight"] = -15,
+        ["RangeAngle"] = true, --[ Always Set to true unless you know what your doing ]--
+    },
+    Skill = {
+        ['Active'] = false, 
+        ["NumberOfPointsToWait"] = 5, --[ Wait for a set amount of skill points before autoskill kicks in ]--
+        ["SkilltoPut"] = "Strength" ,
     }
 }
 
