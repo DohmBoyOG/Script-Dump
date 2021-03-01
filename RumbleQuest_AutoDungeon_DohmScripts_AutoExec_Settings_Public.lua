@@ -14,7 +14,7 @@ getgenv().GameSettings = {
         ["AbilityRarity"] = {["Common"] = false, ["Unique"] = false, ["Rare"] = false, ["Epic"] = false,["Lengendary"] = false},
     },
     Dungeon = {
-        ["Active"] = false, --[ On or Off ]--
+        ["Active"] = true, --[ On or Off ]--
         ["Difficulty"] = "Easy", --[ Easy, Medium, Hard, Expert ]
         ["PartyOnly"] = false,
         ["Hardcore"] = false,
@@ -33,4 +33,4 @@ getgenv().GameSettings = {
     }
 }
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/RumbleQuest_AutoDungeon_DohmScripts_AutoExec_Public.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/RumbleQuest_AutoDungeon_DohmScripts_Public.lua"))()
