@@ -32,6 +32,7 @@ function GetEnemyPlayers()
    return enemiesList
 end
 
+--[Credit: Eski on V3r ]--
 function isnil(thing)
     return (thing == nil)
 end
@@ -128,6 +129,7 @@ function UpdatePlayerChams()
       end
    end
 end
+--[Credit: Eski on V3r ]--
 
 while wait() do
     UpdatePlayerChams()
