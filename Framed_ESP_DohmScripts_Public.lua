@@ -50,7 +50,6 @@ function UpdatePlayerChams()
             if not isnil(v.Character) then
                for _, k in pairs(v.Character:GetChildren()) do
                   if k:IsA "BasePart" and not k:FindFirstChild "Cham" then
-                      print('Doing Chames 1')
                      local cham = Instance.new("BoxHandleAdornment", k)
                      cham.ZIndex = 10
                      cham.Adornee = k
@@ -64,7 +63,6 @@ function UpdatePlayerChams()
                target = workspace.Events.GetTargetLocal:InvokeServer()
                if not isnil(target.Character) then
                   for _, k in pairs(target.Character:GetChildren()) do
-                      print('Doing Chames 2')
                      if k:IsA "BasePart" and not k:FindFirstChild "Cham" then
                         local cham = Instance.new("BoxHandleAdornment", k)
                         cham.ZIndex = 10
@@ -78,7 +76,6 @@ function UpdatePlayerChams()
                   end
                   for _, v in pairs(otherPlayers:GetPlayers()) do
                      for _, k in pairs(target.Character:GetChildren()) do
-                         print('Doing Chames 3')
                         if thisPlayer.Role == 'Police' or thisPlayer.Role == 'Undercover' and v.Role == 'Undercover' and k:IsA "BasePart" and not k:FindFirstChild "Cham" then
                            local cham = Instance.new("BoxHandleAdornment", k)
                            cham.ZIndex = 10
@@ -91,7 +88,6 @@ function UpdatePlayerChams()
                         end
                      end
                      if not isnil(v.Character.Head) and not v.Character.Head:FindFirstChild "NameEsp" then
-                         print('Doing Chames 4')
                         local bill = Instance.new("BillboardGui", v.Character.Head)
                         bill.Name = "NameEsp"
                         bill.Size = UDim2.new(1, 200, 1, 30)
