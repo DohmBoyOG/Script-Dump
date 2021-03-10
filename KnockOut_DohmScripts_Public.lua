@@ -334,7 +334,7 @@ KillButton.MouseButton1Click:Connect(
 
             killState = true
             getgenv().Killall = true
-            killAllPlayers()
+            pcall(killAllPlayers)
         else
             notify('Kill All Turned off')
 
@@ -431,9 +431,9 @@ function killAllPlayers()
                     end
                     game:GetService("RunService").Heartbeat:wait()
 
-                until not v.Character or v.Character.Humanoid.Health == 0 or
-                    v.Character:FindFirstChild("SafeTag") and
-                        not thisPlayer.Character:FindFirstChild("HumanoidRootPart")
+                until not v.Character and not v.Character.Humanoid or v.Character.Humanoid.Health == 0 or
+                    v.Character:FindFirstChild("SafeTag") or
+                        not thisPlayer.Character:FindFirstChild("HumanoidRootPart") and not v.Character:FindFirstChild("ForceField")
             end
         end
     end
