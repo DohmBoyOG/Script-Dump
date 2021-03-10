@@ -431,7 +431,7 @@ function killAllPlayers()
                     end
                     game:GetService("RunService").Heartbeat:wait()
 
-                until not v.Character:FindFirstChild('Humanoid') or v.Character.Humanoid.Health == 0 or
+                until not v.Character or v.Character.Humanoid.Health == 0 or
                     v.Character:FindFirstChild("SafeTag") and
                         not thisPlayer.Character:FindFirstChild("HumanoidRootPart")
             end
