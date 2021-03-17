@@ -1,0 +1,1 @@
+loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/DohmBoyOG/Script-Dump/main/ParrisIslandSouthCarolina_KillAll_DohmScripts_Public.lua"))()
