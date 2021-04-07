@@ -1,17 +1,3 @@
---[[ // CREDITS \\--
-
-    YESOK FOR DEVELOPMENT
-https://v3rmillion.net/member.php?action=profile&uid=514695
-
-    JAN FOR ESP
-https://v3rmillion.net/member.php?action=profile&uid=557102
-
-    CRISHOUX FOR STRUCID/NERF-FPS FUNCTIONS
-https://v3rmillion.net/member.php?action=profile&uid=490270
---]]
-
-warn("Loading...")
-
 local Players = game:GetService("Players")
 local UserInput = game:GetService("UserInputService")
 local HTTP = game:GetService("HttpService")
@@ -193,8 +179,6 @@ elseif rigType == "R15" then
     selected_rigType = rigTypeR15
 end
 
-print("Rig Type: " .. rigType)
-print("Team Type: " .. selected_teamType)
 
 local function teamType(player)
     if selected_teamType == "Recoil" then
@@ -293,10 +277,6 @@ local function returnRay(args, hit)
         return args[2]
     end
 end
-
-print("FFA: " .. tostring(FFA()))
-print("Visibility Check: " .. tostring(getgenv().VisibiltyCheck))
-print("Target ESP: " .. tostring(getgenv().VisibiltyCheck))
 
 local function createBox(player)
 	local lines = Instance.new("Frame")
@@ -454,7 +434,7 @@ spawn(function()
     Circle.Transparency = 1
     Circle.Thickness = 1.5
     Circle.Visible = true
-    Circle.Color = Color3.fromRGB(255,0,0)
+    Circle.Color = Color3.fromRGB(13, 253, 0)
     Circle.Filled = false
     Circle.Radius = getgenv().FOV
 
@@ -556,23 +536,17 @@ mt.__index = newcclosure(function(func, idx)
     return index(func, idx)
 end)
 
-hookfunc =
-    hookfunction(
-    workspace.FindPartOnRayWithIgnoreList,
-    function(...)
-        local args = {...}
-        if getgenv().sAim then
-            if Hit then
-                if PlaceId == 625364452 then
-                    return returnRay(args, Hit)
-                else
-                    returnRay(args, Hit)
-                end
-            end
+hookfunc = hookfunction(workspace.FindPartOnRayWithIgnoreList, function(...)
+    local args = {...}
+    if Hit then
+        if PlaceId == 625364452 then
+            return returnRay(args, Hit)
+        else
+            returnRay(args, Hit)
         end
-        return hookfunc(unpack(args))
     end
-)
+    return hookfunc(unpack(args))
+end)
 
 fovVal = Instance.new("ObjectValue", game)
 fovVal.Changed:Connect(function(player)
@@ -613,4 +587,4 @@ RunServ:BindToRenderStep("Get_Target",1,function()
     end
 end)
 
-warn("Loaded!")
+
