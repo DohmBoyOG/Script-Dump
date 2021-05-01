@@ -2729,13 +2729,14 @@ function DiscordLib:Window(text)
 				
 				ChannelHolder.CanvasSize = UDim2.new(0,0,0,ChannelHolderLayout.AbsoluteContentSize.Y)
 				
-				function DropFunc:Remove(itemtext)
+				function DropFunc:Remove(varoption)
 					for i,v in next, DropItemHolder:GetDescendants() do
-						if v:IsA('TextLabel') and v.Text == itemtext then
-						    print(v.Parent)
-							v.Parent:Destroy()
+						if v:IsA('TextLabel') and v.Text == varoption
+							v:Destroy()
 						end
-                    end						
+                    end
+                end
+                						
 					
 					CurrentSelectedText.Text = "..."
 					
