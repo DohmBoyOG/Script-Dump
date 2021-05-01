@@ -2731,7 +2731,7 @@ function DiscordLib:Window(text)
 				
 				function DropFunc:Remove(itemtext)
 					for i,v in next, DropItemHolder:GetChildren() do
-						if v.Name == itemtext then
+						if v.Text == itemtext then
 							v:Destroy()
 						end
                     end						
