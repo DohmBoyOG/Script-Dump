@@ -2729,8 +2729,8 @@ function DiscordLib:Window(text)
 				
 				ChannelHolder.CanvasSize = UDim2.new(0,0,0,ChannelHolderLayout.AbsoluteContentSize.Y)
 				
-				function DropFunc:Remove(thisname)
-					print('in modified function')
+				function DropFunc:Remove()
+					print('two')
 					for i,v in next, DropItemHolder:GetDescendants() do
 							print(v)
 						end
