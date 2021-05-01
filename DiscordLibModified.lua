@@ -2731,7 +2731,7 @@ function DiscordLib:Window(text)
 				
 				function DropFunc:Remove(thisname)
 					print('in modified function')
-					for i,v in next, DropItemHolder:GetChildren() do
+					for i,v in next, DropItemHolder:GetDescendants do
 						if v:IsA('TextLabel') and v.Text == thisname then
 							print(v)
 						end
