@@ -2730,19 +2730,12 @@ function DiscordLib:Window(text)
 				ChannelHolder.CanvasSize = UDim2.new(0,0,0,ChannelHolderLayout.AbsoluteContentSize.Y)
 				
 				function DropFunc:Remove(thisname)
-					print(thisname)			
-					
-					CurrentSelectedText.Text = "..."
-					
-					itemcount = 0
-					framesize = 0
-					DropItemHolder.Size = UDim2.new(0, 385, 0, 0)
-					DropdownFrameMain.Size = UDim2.new(0, 392, 0, 0)
-					DropdownFrameMainOutline.Size = UDim2.new(0, 396, 0, 0)
-					Dropdown.Size = UDim2.new(0, 403, 0, 73)
-					DropdownFrameMain.Visible = false
-					DropdownFrameMainOutline.Visible = false
-					ChannelHolder.CanvasSize = UDim2.new(0,0,0,ChannelHolderLayout.AbsoluteContentSize.Y)
+					print('in modified function')
+					for i,v in next, DropItemHolder:GetChildren() do
+						if v:IsA('TextLabel') and v.Text == thisname then
+							print(v)
+						end
+                    end					
 				end
 				
 				function DropFunc:Add(textadd)
