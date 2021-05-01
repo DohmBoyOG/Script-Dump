@@ -2732,6 +2732,7 @@ function DiscordLib:Window(text)
 				function DropFunc:Remove(itemtext)
 					for i,v in next, DropItemHolder:GetDescendants() do
 						if v:IsA('TextLabel') and v.Text == itemtext then
+						    print(v.Parent)
 							v.Parent:Destroy()
 						end
                     end						
